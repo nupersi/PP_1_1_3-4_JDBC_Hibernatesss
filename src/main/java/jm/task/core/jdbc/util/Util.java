@@ -16,6 +16,9 @@ import java.util.Properties;
 
 public class Util {
 
+
+    private static Connection connection;
+
     private static SessionFactory factory;
 
     private final static String URL = "jdbc:mysql://localhost:3306/mydatabase";
@@ -23,17 +26,24 @@ public class Util {
     private final static String PASSWORD = "Terminatoratm123.";
 
     public static Connection getConnection () {
+//        if (!connection.isClosed()) {
+//            System.out.println("Connection has been made");
+//            return connection;
+//        } else {
         try {
-            Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            if (!connection.isClosed()) {
-                System.out.println("OK");
+            if (connection != null && !connection.isClosed()) {
+                System.out.println("Connection has been made");
+                return connection;
+            } else {
+                connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                System.out.println("Connection has been made");
                 return connection;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("Failed");
-        return null;
+        System.out.println("Failed: Сonnection has NOT been established");
+        return connection;
     }
 
     public static SessionFactory getFactory () {
@@ -57,10 +67,11 @@ public class Util {
 
                 factory = config.buildSessionFactory(serviceRegistry);
             } catch (Exception exception) {
-                System.out.println("Failed GETFACTORY method");
+                System.out.println("Failed: GETFACTORY method has NOT been established");
                 exception.printStackTrace();
             }
         }
+        System.out.println("GETFACTORY method: Factory was obtained");
         return factory;
     }
 }
