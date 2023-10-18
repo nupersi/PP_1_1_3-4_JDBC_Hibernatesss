@@ -3,8 +3,9 @@ package jm.task.core.jdbc.model;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "userstable")
+@Table (name = "userstable")//todo в след.раз стоит давать осмысленные имена таблиц
 public class User {
+
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column

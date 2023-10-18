@@ -5,10 +5,9 @@ import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.util.Util;
 
 public class Main {
-    public static void main(String[] args) {
-        Util.getConnection();
-        UserDao userDao = new UserDaoJDBCImpl();
 
+    public static void main(String[] args) {
+        UserDao userDao = new UserDaoJDBCImpl();
         userDao.createUsersTable();
 
         userDao.saveUser("Name1", "LastName1", (byte) 20);
@@ -17,8 +16,10 @@ public class Main {
         userDao.saveUser("Name4", "LastName4", (byte) 38);
 
         userDao.removeUserById(1);
-        userDao.getAllUsers();
+        userDao.getAllUsers();//todo консоль показывает, что - как было 4 users так и осталось после "удаления" одного
         userDao.cleanUsersTable();
         userDao.dropUsersTable();
     }
 }
+
+//todo залил пригодный .gitignore

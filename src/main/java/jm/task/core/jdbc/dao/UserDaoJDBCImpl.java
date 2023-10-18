@@ -12,21 +12,21 @@ import static jm.task.core.jdbc.util.Util.getConnection;
 
 public class UserDaoJDBCImpl implements UserDao {
 
-    Connection connection = getConnection();
+    Connection connection;
 
     public UserDaoJDBCImpl() {
-
+        connection = getConnection();//todo исправили online, но - потребуется еще правка (после правки в Util)
     }
 
     public void createUsersTable() {
-        String create = "CREATE TABLE IF NOT EXISTS `mydatabase`.`userstable` (\n" +
+        String createUsersQuery = "CREATE TABLE IF NOT EXISTS `mydatabase`.`userstable` (\n" +//todo Java - многословная, даем осмысленные названия переменным, здесь и ниже по коду
                 "  `id` BIGINT NOT NULL AUTO_INCREMENT,\n" +
                 "  `name` VARCHAR(45) ,\n" +
                 "  `lastName` VARCHAR(45) ,\n" +
                 "  `age` TINYINT ,\n" +
-                "  PRIMARY KEY (`id`));\n";
+                "  PRIMARY KEY (`id`));\n";//todo скрипты стоит писать самому, руками (в след.раз или now)
         try (Statement statement = connection.createStatement()) {
-            statement.execute(create);
+            statement.execute(createUsersQuery);
             System.out.println("DBTable users has been created");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -57,7 +57,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void removeUserById(long id) {
-        if (id > 0) {
+        if (id > 0) {//todo ..что проверяем этой валидацией? Нужно проверить - есть ли такой User в DB, если есть - удаляем, нет - говорим об этом
             String remove = "DELETE FROM userstable WHERE id = id";
             try (PreparedStatement preparedStatement = connection.prepareStatement(remove)) {
                 preparedStatement.executeUpdate();
@@ -71,10 +71,8 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public List<User> getAllUsers() {
-        List <User> rslist = new ArrayList<>();
-
+        List<User> rslist = new ArrayList<>();//todo осмысленные названия переменным
         String getAll = "SELECT * FROM userstable";
-
         try (PreparedStatement preparedStatement = connection.prepareStatement(getAll)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -84,7 +82,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 rslist.add(new User(name, lastName, age));
             }
             System.out.println("All users of the table \"users\" have been sent");
-            return rslist;
+//            return rslist;//todo зачем? ..имеет место небольшое непонимание (java core)
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -93,7 +91,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void cleanUsersTable() {
         String clean = "TRUNCATE TABLE userstable";
-
         try (Statement statement = connection.createStatement()) {
             statement.execute(clean);
             System.out.println("Table \"users\" has been cleared");
