@@ -16,10 +16,11 @@ public class Main {
         userDao.saveUser("Name4", "LastName4", (byte) 38);
 
         userDao.removeUserById(1);
-        userDao.getAllUsers();//todo консоль показывает, что - как было 4 users так и осталось после "удаления" одного
+        userDao.removeUserById(6);
+        System.out.println(userDao.getAllUsers());//todo консоль показывает, что - как было 4 users так и осталось после "удаления" одного // Исправил
         userDao.cleanUsersTable();
         userDao.dropUsersTable();
     }
 }
 
-//todo залил пригодный .gitignore
+//todo залил пригодный .gitignore // Спасибо
