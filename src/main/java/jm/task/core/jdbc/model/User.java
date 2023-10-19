@@ -3,7 +3,7 @@ package jm.task.core.jdbc.model;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "users")//todo в след.раз стоит давать осмысленные имена таблиц // исправил
+@Table (name = "users")
 public class User {
 
     @Id

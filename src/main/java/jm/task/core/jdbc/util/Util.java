@@ -7,13 +7,13 @@ import java.sql.SQLTimeoutException;
 
 public class Util {
 
-    private Connection connection;//todo сломали... парадигму ООП, - избавляемся от static // Исправил
+    private Connection connection;
 
-    private final String URL = "jdbc:mysql://localhost:3306/mydatabase";//todo сломали...  // Исправил
+    private final String URL = "jdbc:mysql://localhost:3306/mydatabase";
     private final String USERNAME = "root";
     private final String PASSWORD = "Terminatoratm123.";
 
-    public Connection getConnection() {//todo сломали...  // Исправил
+    public Connection getConnection() {
         try {
             if (connection != null && !connection.isClosed()) {
                 System.out.println("Connection has been made");
@@ -23,7 +23,7 @@ public class Util {
                 System.out.println("Connection just is made");
                 return connection;
             }
-        } catch (SQLException e) {//todo почему SQLException? // Из документации https://docs.oracle.com/javase/8/docs/api/java/sql/DriverManager.html , там в ошибках этого метода - Timeout и просто SQL;
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return connection;
